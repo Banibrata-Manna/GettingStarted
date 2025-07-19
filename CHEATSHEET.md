@@ -1,0 +1,99 @@
+# Git Cheat Sheet
+
+==========================
+--View repository size--
+curl -s https://api.github.com/repos/ameerzada2000/y1001 | jq '.size' | numfmt --to=iec --from-unit=1024
+==========================
+--remove specific files from staging--
+git restore --staged <file>
+--remove all files from staging--
+git reset
+==========================
+--Remove Local commit retaining youar worfATBBfTGZ6LRJcfHa6UdzRR3muNjx22507F7Cchk--
+ git reset --soft HEAD~1
+--Remove Local commit without retaining your work--
+git reset --hard HEAD~1
+Can also use:
+git reset --soft origin/<branch-name>
+==========================
+--Commit edit--
+git commit --amend
+==========================
+--Branch delete local & remote--
+git branch -D branch_name
+git push origin :branch_name
+==========================
+--when pulling from any feature branch and want to merge with the main--
+git pull origin develop 
+==========================
+--To create a patch of all diff--
+git diff > /home/abhishek/patch_file_name.patch
+--To apply patch--
+git apply patch_file_name.patch
+--for creating a patch for a newly added file--
+git diff --cached > /home/abhishek/productcategoryes.patch
+==========================
+--To create a patch of a particular file--
+git diff src/main/java/com/tbc/ofbiz/facility/service/FacilityServices.java > /home/abhishek/patch_file_name.patch
+==========================
+--Create a patch from commit-- 
+git log --patch -1 commit-id > /home/abhishek/patch_file_name.patch
+==========================
+--Create stash--
+git stash
+--pop latest stash--
+git stash pop
+--list stash--
+git stash list
+--drop all stash--
+git stash drop
+--stash with a message--
+git stash push -m "my_stash"
+--pop specific stash--
+git stash pop stash@{n}
+--apply specific stash--
+git stash apply stash@{n}
+--make a patch from the stash-- 
+git stash show -p stash@{<number>} > <name>.patch
+==========================
+git config --global user.name "git username"
+git config --global user.email  "git email-id "
+git config --global user.password "git password"
+
+==========================
+Command to remove untracked files 
+git clean -fx 
+==========================
+Revert pushed commit and go to the previous commit with your remaining work:
+1. gilt log > copy previous (2nd last from the head) commit id > git reset <commit id> > check your pushed work with git status
+2. git push origin <origin/branch name>  -f > now check your changes on the origin.
+=========================
+For copying the commit changes on any branch again
+git cherry-pick <commitHash>
+=========================
+To store git credential (use this command before you want to type user name and password)
+git config --local credential.helper store
+To remove stored git credential
+git config --local credential.helper ''
+===========================
+To set remote origin URL with username
+git remote set-url origin https://username@<repocloning-link>
+===========================
+command for commit with change log
+git commit --trailer Changelog:Changed -m "commit message"
+git commit --trailer Changelog:Added -m “<commit message>”
+===========================
+Delete all branches on local expect develop or give branch name 
+git branch | grep -v 'develop' | xargs git branch -D
+===========================
+patch with no prefix
+
+git diff --no-prefix applications/fulfillment/template/storefulfillment/ListStoreInProgressOrders.ftl > /home/common/Test.patch
+===========================
+
+Cleaning the untracked files:
+1. Run git clean -n to see a dry run.
+2. Run git clean -f to force untracked file deletion.
+3. Use git clean -f -d to remove untracked directories.
+4. Use git clean -f -x to remove untracked .gitignore files.
+5. Add the -i switch to do an interactive git clean.
