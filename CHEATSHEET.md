@@ -1,99 +1,200 @@
-# Git Cheat Sheet
+# 🧠 Git Command Cheatsheet
 
-==========================
---View repository size--
+## 🔍 View Repository Size
+
+```bash
 curl -s https://api.github.com/repos/ameerzada2000/y1001 | jq '.size' | numfmt --to=iec --from-unit=1024
-==========================
---remove specific files from staging--
+```
+
+---
+
+## 🚫 Remove Specific Files from Staging
+
+```bash
 git restore --staged <file>
---remove all files from staging--
+```
+
+## 🔄 Remove All Files from Staging
+
+```bash
 git reset
-==========================
---Remove Local commit retaining youar worfATBBfTGZ6LRJcfHa6UdzRR3muNjx22507F7Cchk--
- git reset --soft HEAD~1
---Remove Local commit without retaining your work--
+```
+
+---
+
+## ⏪ Undo Local Commits
+
+- Retain your work:
+
+```bash
+git reset --soft HEAD~1
+```
+
+- Remove work as well:
+
+```bash
 git reset --hard HEAD~1
-Can also use:
+```
+
+- Alternative:
+
+```bash
 git reset --soft origin/<branch-name>
-==========================
---Commit edit--
+```
+
+---
+
+## 📝 Edit Last Commit
+
+```bash
 git commit --amend
-==========================
---Branch delete local & remote--
+```
+
+---
+
+## 🌿 Delete Branch (Local and Remote)
+
+```bash
 git branch -D branch_name
 git push origin :branch_name
-==========================
---when pulling from any feature branch and want to merge with the main--
-git pull origin develop 
-==========================
---To create a patch of all diff--
+```
+
+---
+
+## 🔄 Pull Feature Branch to Merge into Main
+
+```bash
+git pull origin develop
+```
+
+---
+
+## 🩹 Patches
+
+- Create a patch with all changes:
+
+```bash
 git diff > /home/abhishek/patch_file_name.patch
---To apply patch--
+```
+
+- Apply patch:
+
+```bash
 git apply patch_file_name.patch
---for creating a patch for a newly added file--
+```
+
+- Patch for staged files:
+
+```bash
 git diff --cached > /home/abhishek/productcategoryes.patch
-==========================
---To create a patch of a particular file--
-git diff src/main/java/com/tbc/ofbiz/facility/service/FacilityServices.java > /home/abhishek/patch_file_name.patch
-==========================
---Create a patch from commit-- 
-git log --patch -1 commit-id > /home/abhishek/patch_file_name.patch
-==========================
---Create stash--
-git stash
---pop latest stash--
-git stash pop
---list stash--
-git stash list
---drop all stash--
-git stash drop
---stash with a message--
-git stash push -m "my_stash"
---pop specific stash--
-git stash pop stash@{n}
---apply specific stash--
-git stash apply stash@{n}
---make a patch from the stash-- 
-git stash show -p stash@{<number>} > <name>.patch
-==========================
-git config --global user.name "git username"
-git config --global user.email  "git email-id "
-git config --global user.password "git password"
+```
 
-==========================
-Command to remove untracked files 
-git clean -fx 
-==========================
-Revert pushed commit and go to the previous commit with your remaining work:
-1. gilt log > copy previous (2nd last from the head) commit id > git reset <commit id> > check your pushed work with git status
-2. git push origin <origin/branch name>  -f > now check your changes on the origin.
-=========================
-For copying the commit changes on any branch again
+- Patch for a specific file:
+
+```bash
+git diff path/to/file.java > /home/abhishek/patch_file_name.patch
+```
+
+- Patch from commit:
+
+```bash
+git log --patch -1 <commit-id> > /home/abhishek/patch_file_name.patch
+```
+
+---
+
+## 🧳 Git Stash
+
+```bash
+git stash                     # Create stash
+git stash pop                 # Apply and remove latest stash
+git stash list                # List all stashes
+git stash drop                # Drop all stashes
+git stash push -m "msg"       # Stash with a message
+git stash pop stash@{n}       # Pop specific stash
+git stash apply stash@{n}     # Apply specific stash
+git stash show -p stash@{n} > name.patch  # Patch from stash
+```
+
+---
+
+## ⚙️ Git User Config
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+git config --global user.password "yourpassword"
+```
+
+---
+
+## 🧹 Clean Untracked Files
+
+```bash
+git clean -fx      # Force clean untracked files
+git clean -n       # Dry run
+git clean -f       # Untracked files
+git clean -f -d    # Also directories
+git clean -f -x    # Include .gitignore'd files
+git clean -i       # Interactive
+```
+
+---
+
+## 🧯 Revert Pushed Commit & Retain Work
+
+```bash
+git log                       # Copy second-last commit ID
+git reset <commit-id>        # Reset to that commit
+git push origin branch-name -f  # Force push
+```
+
+---
+
+## 🍒 Cherry Pick a Commit
+
+```bash
 git cherry-pick <commitHash>
-=========================
-To store git credential (use this command before you want to type user name and password)
-git config --local credential.helper store
-To remove stored git credential
-git config --local credential.helper ''
-===========================
-To set remote origin URL with username
-git remote set-url origin https://username@<repocloning-link>
-===========================
-command for commit with change log
-git commit --trailer Changelog:Changed -m "commit message"
-git commit --trailer Changelog:Added -m “<commit message>”
-===========================
-Delete all branches on local expect develop or give branch name 
+```
+
+---
+
+## 🔐 Git Credential Storage
+
+```bash
+git config --local credential.helper store     # Store credentials
+git config --local credential.helper ''        # Remove stored credentials
+```
+
+---
+
+## 🌍 Set Remote URL with Username
+
+```bash
+git remote set-url origin https://username@<repo-url>
+```
+
+---
+
+## 📋 Commit with Changelog Trailer
+
+```bash
+git commit --trailer Changelog:Changed -m "message"
+git commit --trailer Changelog:Added -m "message"
+```
+
+---
+
+## 🧨 Delete All Local Branches Except `develop`
+
+```bash
 git branch | grep -v 'develop' | xargs git branch -D
-===========================
-patch with no prefix
+```
 
-git diff --no-prefix applications/fulfillment/template/storefulfillment/ListStoreInProgressOrders.ftl > /home/common/Test.patch
-===========================
+---
 
-Cleaning the untracked files:
-1. Run git clean -n to see a dry run.
-2. Run git clean -f to force untracked file deletion.
-3. Use git clean -f -d to remove untracked directories.
-4. Use git clean -f -x to remove untracked .gitignore files.
-5. Add the -i switch to do an interactive git clean.
+## 🔧 Create Patch with No Prefix
+
+```bash
+git diff --no-prefix path/to/file.ftl > /home/common/Test.patch
+```
